@@ -16,7 +16,8 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'ui.grid'
+    'ui.grid', 
+    'ui.grid.selection'
   ])
   .config(function ($routeProvider) {
     $routeProvider

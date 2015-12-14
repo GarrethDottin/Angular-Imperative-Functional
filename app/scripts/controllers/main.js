@@ -9,13 +9,15 @@
  */
 angular.module('angularImperativeCodebaseApp')
   .controller('MainCtrl', function ($http, $scope, $location) {
-  	var vm, 
+  	var vm = $scope,
   		rootUrl =  "http://localhost:3000/drones",
   		firstDetailedItem = "http://localhost:3000/drones/1";
   	$location.$$port = 3000;
-
-  	vm = $scope; 
   	vm.ModelNames = [];
+  	vm.showModal = false;
+    vm.toggleModal = function(){
+        vm.showModal = !vm.showModal;
+    };
 
   	/// Table Configurations
   	vm.detailedOptions = {};
@@ -42,18 +44,37 @@ angular.module('angularImperativeCodebaseApp')
   	{ 
   		name: "range", 
   		field: "range"
-  	}]; 
-  	
+  	}
+  	]; 
+
+  	vm.detailedOptions = {};
   	vm.detailedOptions.data;
-  	vm.gridOptions = {}; 
+  	vm.gridOptions = {}
+  	vm.gridOptions.enableRowSelection = true;
   	vm.gridOptions.columnDefs = [{
         name: 'modelNumber',
         field: 'model_number'
     }, {
-        name: 'lastNamer',
+        name: 'Model Name',
         field: 'model_name'
-    }];
+    }, 
+    { 
+    	name: 'Edit', 
+    	field: 'edit', 
+    	cellTemplate: '<div ng-click="toggleModal()"> Edit</div>'
+    }
+    ];
 
+    vm.gridOptions.onRegisterApi = function (data) { 
+		data.selection.on.rowSelectionChanged(vm,function(row){
+			var currentRow = this.grid.selection.lastSelectedRow;
+			this.selection.clearSelectedRows(); 
+			currentRow.isSelected = true; 
+			detailsCall(currentRow.entity.model_number);
+			// Call the current row with a http call 
+			// 
+      	});
+    };
 
   	var parser = { 
   		changeModelNames: function(ModelNames) { 
@@ -61,13 +82,30 @@ angular.module('angularImperativeCodebaseApp')
   				vm.ModelNames[i].model_name = "The Original " + vm.ModelNames[i].model_name;
   			}
   			vm.gridOptions.data = vm.ModelNames;
-  		}, 
-  		displayFirstUser: function(model) {
-
   		}
+  	}; 
 
 
-  	}
+
+  	vm.editClicked = function(drone) { 
+  		// Make an impure function 
+  		// Make it similar to delete and dont use partial application 
+  	};
+
+  	vm.deleteClicked = function () { 
+  		//
+  		// 
+  	}; 
+
+  	var detailsCall = function (id) { 
+  		$http.get(rootUrl + '/' + id)
+  			.success(function(data) { 
+  				vm.detailedOptions.data = data;
+  			})
+  			.error(function(data) { 
+  				console.log(data);
+			});
+  	};
 
   	$http.get(rootUrl)
   		.success(function(data){ 
