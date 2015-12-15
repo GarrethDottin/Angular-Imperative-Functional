@@ -23,12 +23,14 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <div ng-controller="MainCtrl" class="header">
+    <div ng-controller="MainCtrl as main" class="header">
       <div class="navbar navbar-default" role="navigation">
         <div class="container">
           <div class="navbar-header">
             <div id="grid1" ui-grid="gridOptions" ui-grid-selection class="grid">
-
+<modal visible="showModal">
+      Any additional data / buttons
+  </modal>
             <div id="grid2" ui-grid="detailedOptions" class="grid"></div>
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
               <span class="sr-only">Toggle navigation</span>
@@ -40,14 +42,7 @@
             <a class="navbar-brand" href="#/">angularImperativeCodebase</a>
           </div>
 
-          <div class="collapse navbar-collapse" id="js-navbar-collapse">
-
-            <ul class="nav navbar-nav">
-              <li class="active"><a href="#/">Home</a></li>
-              <li><a ng-href="#/about">About</a></li>
-              <li><a ng-href="#/">Contact</a></li>
-            </ul>
-          </div>
+          
         </div>
       </div>
     </div>
@@ -89,12 +84,12 @@
     <!-- endbower -->
     <!-- endbuild -->
     <script src="bower_components/angular-ui-grid/ui-grid.min.js"></script>
-
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/about.js"></script>
+        <script src="scripts/directives/modal.js"></script>
         <!-- endbuild -->
 </body>
 </html>

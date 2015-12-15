@@ -13,10 +13,13 @@ angular.module('angularImperativeCodebaseApp')
   		rootUrl =  "http://localhost:3000/drones",
   		firstDetailedItem = "http://localhost:3000/drones/1";
   	$location.$$port = 3000;
-  	vm.ModelNames = [];
+
+  	vm.modelNames = [];
   	vm.showModal = false;
-    vm.toggleModal = function(){
-        vm.showModal = !vm.showModal;
+  	$scope.showModal = false;
+    $scope.toggleModal = function(row){
+    	$scope.showModal = true;
+        // vm.showModal = !vm.showModal;
     };
 
   	/// Table Configurations
@@ -61,7 +64,7 @@ angular.module('angularImperativeCodebaseApp')
     { 
     	name: 'Edit', 
     	field: 'edit', 
-    	cellTemplate: '<div ng-click="toggleModal()"> Edit</div>'
+    	cellTemplate: '<a href="#" ng-click="grid.appScope.toggleModal(row)"> Edit</a>'
     }
     ];
 
@@ -77,11 +80,11 @@ angular.module('angularImperativeCodebaseApp')
     };
 
   	var parser = { 
-  		changeModelNames: function(ModelNames) { 
-  			for (var i = 0; i < ModelNames.length; i++) { 
-  				vm.ModelNames[i].model_name = "The Original " + vm.ModelNames[i].model_name;
+  		changemodelNames: function(modelNames) { 
+  			for (var i = 0; i < modelNames.length; i++) { 
+  				vm.modelNames[i].model_name = "The Original " + vm.modelNames[i].model_name;
   			}
-  			vm.gridOptions.data = vm.ModelNames;
+  			vm.gridOptions.data = vm.modelNames;
   		}
   	}; 
 
