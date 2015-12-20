@@ -12,16 +12,25 @@ angular.module('angularImperativeCodebaseApp')
   	var vm = $scope,
   		rootUrl =  "http://localhost:3000/drones",
   		firstDetailedItem = "http://localhost:3000/drones/1";
-  	$location.$$port = 3000;
 
   	vm.modelNames = [];
   	vm.showModal = false;
-  	$scope.showModal = false;
     $scope.toggleModal = function(row){
-    	$scope.showModal = true;
-        // vm.showModal = !vm.showModal;
+    	vm.showModal = !vm.showModal;
+    	editFunction(row);
     };
 
+    vm.submitRequest = function () {
+    	var data = {};
+    	data.modelNumber = $scope.model_number;
+    	data.modelName = $scope.name;
+    	editCall(data)
+    };
+
+    function editFunction (row) { 
+    	$scope.name = row.entity.model_name;
+    	$scope.model_number = row.entity.model_number;
+    };
   	/// Table Configurations
   	vm.detailedOptions = {};
   	vm.detailedOptions.columnDefs = [{ 
@@ -65,10 +74,9 @@ angular.module('angularImperativeCodebaseApp')
     	name: 'Edit', 
     	field: 'edit', 
     	cellTemplate: '<a href="#" ng-click="grid.appScope.toggleModal(row)"> Edit</a>'
-    }
-    ];
+    }];
 
-    vm.gridOptions.onRegisterApi = function (data) { 
+    vm.gridOptions.onRegisterApi = function (data) {
 		data.selection.on.rowSelectionChanged(vm,function(row){
 			var currentRow = this.grid.selection.lastSelectedRow;
 			this.selection.clearSelectedRows(); 
@@ -80,8 +88,9 @@ angular.module('angularImperativeCodebaseApp')
     };
 
   	var parser = { 
-  		changemodelNames: function(modelNames) { 
-  			for (var i = 0; i < modelNames.length; i++) { 
+  		changemodelNames: function(modelNames) {
+  			debugger;
+  			for (var i = 0; i < modelNames.length; i++) {
   				vm.modelNames[i].model_name = "The Original " + vm.modelNames[i].model_name;
   			}
   			vm.gridOptions.data = vm.modelNames;
@@ -90,19 +99,17 @@ angular.module('angularImperativeCodebaseApp')
 
 
 
-  	vm.editClicked = function(drone) { 
-  		// Make an impure function 
-  		// Make it similar to delete and dont use partial application 
+
+  	var editCall = function (data) {
+  		$http.post('http://localhost:3000/drones/' + data.modelNumber, data)
+  			.success( function (data){
+  				return data;
+  			});
   	};
 
-  	vm.deleteClicked = function () { 
-  		//
-  		// 
-  	}; 
-
-  	var detailsCall = function (id) { 
+  	var detailsCall = function (id) {
   		$http.get(rootUrl + '/' + id)
-  			.success(function(data) { 
+  			.success(function(data) {
   				vm.detailedOptions.data = data;
   			})
   			.error(function(data) { 
@@ -111,12 +118,19 @@ angular.module('angularImperativeCodebaseApp')
   	};
 
   	$http.get(rootUrl)
-  		.success(function(data){ 
+  		.success(function(data){
+  			debugger;
   			vm.gridOptions.data = data;
   			$http.get(firstDetailedItem).success(function(data){ 
+
   				vm.detailedOptions.data = data;
   			});
   		});
+// Partial Application 
+// Use Promises 
+// Immutable Data Stuctures 
+// Composition 
+
 
 
   });
