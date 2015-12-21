@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="immutable" class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Immutable Angular</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Font -->
+  <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic' rel='stylesheet' type='text/css' />
+</head>
+
+
+<body ng-controller="sampleCtrl">
+  <h1>Vikings which like to party</h1>
+  <ul>
+    <li ng-repeat="viking in immutableList">
+      {{viking.name}}
+    </li>
+  </ul>
+  <br>
+  <ul>
+    <li ng-repeat="viking in mutableListWithImmutables">
+      {{viking.get("name")}}
+    </li>
+  </ul>
+
+  <!-- In production use:
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+  -->
+  <script src="../bower_components/immutable/dist/immutable.js"></script>
+  <script src="../bower_components/angular/angular.js"></script>
+  <script src="../immutable.js"></script>
+
+  <script src="app.js"></script>
+</body>
+</html>

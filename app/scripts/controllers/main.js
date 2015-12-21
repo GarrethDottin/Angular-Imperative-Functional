@@ -12,14 +12,12 @@ angular.module('angularImperativeCodebaseApp')
   	var vm = $scope,
   		rootUrl =  "http://localhost:3000/drones",
   		firstDetailedItem = "http://localhost:3000/drones/1";
-  	$location.$$port = 3000;
 
   	vm.modelNames = [];
   	vm.showModal = false;
-  	$scope.showModal = false;
+  	vm.showModal = false;
     $scope.toggleModal = function(row){
-    	$scope.showModal = true;
-        // vm.showModal = !vm.showModal;
+        vm.showModal = !vm.showModal;
     };
 
   	/// Table Configurations
@@ -74,6 +72,7 @@ angular.module('angularImperativeCodebaseApp')
 			this.selection.clearSelectedRows(); 
 			currentRow.isSelected = true; 
 			detailsCall(currentRow.entity.model_number);
+			debugger;
 			// Call the current row with a http call 
 			// 
       	});
@@ -110,9 +109,17 @@ angular.module('angularImperativeCodebaseApp')
 			});
   	};
 
+
+	var anonymous  = function (input) { return input };
+	var modifyData =  function (drone) { debugger 
+
+	 {model_name: "The Original " + drone.get('model_name') , model_number: drone.get('model_number')}};
+	vm.parsedData = R.compose(anonymous, modifyData);
+
   	$http.get(rootUrl)
   		.success(function(data){ 
-  			vm.gridOptions.data = data;
+  			var modifiedData = Immutable.fromJS(data);
+  			vm.gridOptions.data = data.map(vm.parsedData);
   			$http.get(firstDetailedItem).success(function(data){ 
   				vm.detailedOptions.data = data;
   			});

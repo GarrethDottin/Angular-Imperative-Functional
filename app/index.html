@@ -14,6 +14,7 @@
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" type="text/css" href="bower_components/angular-ui-grid/ui-grid.min.css">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
 
     <!-- endbuild -->
   </head>
@@ -28,9 +29,6 @@
         <div class="container">
           <div class="navbar-header">
             <div id="grid1" ui-grid="gridOptions" ui-grid-selection class="grid">
-<modal visible="showModal">
-      Any additional data / buttons
-  </modal>
             <div id="grid2" ui-grid="detailedOptions" class="grid"></div>
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
               <span class="sr-only">Toggle navigation</span>
@@ -41,6 +39,19 @@
 
             <a class="navbar-brand" href="#/">angularImperativeCodebase</a>
           </div>
+          <modal visible="showModal">
+          <form role="form"  ng-submit="submitRequest()">
+            <div class="form-group">
+              <label for="email">Name</label>
+              <input type="text" class="form-control" id="email" ng-model="name" />
+            </div>
+            <div class="form-group">
+              <label for="password">Details</label>
+              <input type="text" class="form-control" id="password" ng-model="model_number" />
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+          </form>  
+          </modal>
 
           
         </div>
@@ -68,6 +79,8 @@
        ga('create', 'UA-XXXXX-X');
        ga('send', 'pageview');
     </script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/ramda/0.18.0/ramda.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/immutable/3.7.6/immutable.js"></script>
 
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
@@ -84,7 +97,6 @@
     <!-- endbower -->
     <!-- endbuild -->
     <script src="bower_components/angular-ui-grid/ui-grid.min.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
