@@ -87,18 +87,6 @@ angular.module('angularImperativeCodebaseApp')
   		}
   	}; 
 
-
-
-  	vm.editClicked = function(drone) { 
-  		// Make an impure function 
-  		// Make it similar to delete and dont use partial application 
-  	};
-
-  	vm.deleteClicked = function () { 
-  		//
-  		// 
-  	}; 
-
   	var detailsCall = function (id) { 
   		$http.get(rootUrl + '/' + id)
   			.success(function(data) { 
@@ -111,15 +99,18 @@ angular.module('angularImperativeCodebaseApp')
 
 
 	var anonymous  = function (input) { return input };
-	var modifyData =  function (drone) { debugger 
+	var modifyData1 = function(input, drone) { 
+		return {model_name: input + drone.get('model_name'), model_number: drone.get('model_number')}
+	};
+	var modifyData2 = R.partial(modifyData1, ["The Original"]);
 
-	 {model_name: "The Original " + drone.get('model_name') , model_number: drone.get('model_number')}};
-	vm.parsedData = R.compose(anonymous, modifyData);
+
+	vm.parsedData = R.compose(anonymous, modifyData2);
 
   	$http.get(rootUrl)
   		.success(function(data){ 
   			var modifiedData = Immutable.fromJS(data);
-  			vm.gridOptions.data = data.map(vm.parsedData);
+  			vm.gridOptions.data = modifiedData.map(vm.parsedData);
   			$http.get(firstDetailedItem).success(function(data){ 
   				vm.detailedOptions.data = data;
   			});
