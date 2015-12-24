@@ -18,6 +18,7 @@ angular
     'ngTouch',
     'ui.grid', 
     'ui.grid.selection', 
+    'mutable'
   ])
   .config(function ($routeProvider) {
     $routeProvider

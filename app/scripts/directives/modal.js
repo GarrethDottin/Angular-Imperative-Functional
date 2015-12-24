@@ -14,7 +14,7 @@ angular.module('angularImperativeCodebaseApp')
             '<div class="modal-content">' + 
               '<div class="modal-header">' + 
                 '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>' + 
-                '<h4 class="modal-title">{{ buttonClicked }} clicked!!</h4>' + 
+                '<h4 class="modal-title">{{ buttonClicked }} Edit Details</h4>' + 
               '</div>' + 
               '<div class="modal-body" ng-transclude></div>' + 
             '</div>' + 
@@ -25,7 +25,6 @@ angular.module('angularImperativeCodebaseApp')
       replace:true,
       scope:true,
       link: function postLink(scope, element, attrs) {
-      	console.log('modal code hit')
           scope.$watch(attrs.visible, function(value){
           if(value == true)
             $(element).modal('show');

@@ -28,8 +28,43 @@
       <div class="navbar navbar-default" role="navigation">
         <div class="container">
           <div class="navbar-header">
-            <div id="grid1" ui-grid="gridOptions" ui-grid-selection class="grid">
-            <div id="grid2" ui-grid="detailedOptions" class="grid"></div>
+            <table st-table="rowCollection"  st-table="displayedCollection" class="table table-striped">
+              <thead>
+              <tr>
+                <th>Model Number</th>
+                <th>Model Name</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr ng-repeat="row in rowCollection | mutable">
+                <td>{{row.get('model_number')}}</td>
+                <td>{{row.get('model_name')}}</td>
+                <td> <a href='' ng-click=""> Edit</a>
+              </tr>
+              </tbody>
+            </table>
+            <table st-table="detailCollection" class="table table-striped">
+              <thead>
+              <tr>
+                <th>Model Name</th>
+                <th>Model Description </th>
+                <th>Model Price </th>
+                <th>Model Range </th>
+                <th>Model Year </th>
+
+              </tr>
+              </thead>
+              <tbody >
+              <tr ng-repeat="row in detailCollection | mutable">
+                <td>{{row.get('description')}}</td>
+                <td>{{row.get('name')}}</td>
+                <td>{{row.get('price')}}</td>
+                <td>{{row.get('range')}}</td>
+                <td>{{row.get('year')}}</td>
+              </tr>
+              </tbody>
+            </table>
+
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
               <span class="sr-only">Toggle navigation</span>
               <span class="icon-bar"></span>
@@ -96,7 +131,9 @@
     <script src="bower_components/angular-ui-grid/ui-grid.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/immutable/3.7.6/immutable.js"></script>
     <script src="bower_components/angular-ui-grid/ui-grid.min.js"></script>
+    <script src="bower_components/immutable-angular/immutable.js"></script>
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
