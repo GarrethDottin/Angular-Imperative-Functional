@@ -16,9 +16,11 @@ angular.module('angularImperativeCodebaseApp')
   	vm.modelNames = [];
   	vm.rowCollection = [];
   	vm.displayCollection = [];
-  	vm.showModal = true;
-    $scope.toggleModal = function(row){
+  	vm.showModal = false;
+    vm.toggleModal = function(row){
         vm.showModal = !vm.showModal;
+        vm.currentModelNumber = row.get('model_number');
+        vm.currentModelName = row.get('model_name');
     };
 
 
@@ -31,6 +33,15 @@ angular.module('angularImperativeCodebaseApp')
   			.error(function(data) { 
   				console.log(data);
 			});
+  	};
+
+  	vm.saveDetails = function (currentModelNumber, currentModelName) { 
+  		var url = 'http://localhost:3000/drones/' + currentModelNumber;
+  		var data = {model_number: currentModelNumber, model_name: currentModelName};
+  		$http.post(url, data)
+  			.success(function() { 
+  				vm.showModal = false;
+  			});
   	};
 
 

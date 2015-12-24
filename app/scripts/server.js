@@ -3,10 +3,12 @@ var express = require('express'),
 	http = require('request'), 
 	Promise = require('promise'), 
 	bodyParser = require('body-parser'), 
-	moment = require('moment');
+	moment = require('moment'), 
+	cors = require('cors');
 
 app.use(express.static(__dirname + '/scripts'));
 
+app.use(cors());
 app.use(bodyParser.json({
   extended: true
 }));
@@ -33,7 +35,16 @@ app.get('/drones/:id', function(req, res){
     res.header("Access-Control-Allow-Methods", "GET, PUT, POST");
 	res.json(require('./drone_data.json'));
 	// Send back JSON file of single user
-})
+}); 
+
+app.post('/drones/:id', function(req, res){ 
+	console.log('this is working');
+	res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Cache-Control, Pragma, Origin, Authorization, Content-Type, X-Requested-With");
+    res.header("Access-Control-Allow-Methods", "GET, PUT, POST");
+	res.json(require('./drone_data.json'));
+	// Send back JSON file of single user
+}); 
 var server = app.listen(process.env.PORT || 3000, function () {
   var host = server.address().address;
   var port = server.address().port;

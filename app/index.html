@@ -39,7 +39,7 @@
               <tr ng-repeat="row in rowCollection | mutable">
                 <td>{{row.get('model_number')}}</td>
                 <td>{{row.get('model_name')}}</td>
-                <td> <a href='' ng-click=""> Edit</a>
+                <td> <a href='' ng-click="toggleModal(row)"> Edit</a>
               </tr>
               </tbody>
             </table>
