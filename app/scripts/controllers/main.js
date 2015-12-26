@@ -12,26 +12,24 @@ angular.module('angularImperativeCodebaseApp')
   	var vm = $scope,
   		rootUrl =  "http://localhost:3000/drones",
   		firstDetailedItem = "http://localhost:3000/drones/1";
-
   	vm.modelNames = [];
-  	vm.showModal = false;
-    $scope.toggleModal = function(row){
-    	vm.showModal = !vm.showModal;
-    	editFunction(row);
-    };
 
-    vm.submitRequest = function () {
-    	var data = {};
-    	data.modelNumber = $scope.model_number;
-    	data.modelName = $scope.name;
-    	editCall(data)
+
+  	// Edit Modal 
+  	$scope.showModal = true;
+    vm.toggleModal = function(row){
+    	$scope.showModal = !$scope.showModal;
+    	return editFunction(row);
+
     };
 
     function editFunction (row) { 
     	$scope.name = row.entity.model_name;
     	$scope.model_number = row.entity.model_number;
     };
-  	/// Table Configurations
+
+
+  	// Table Configurations
   	vm.detailedOptions = {};
   	vm.detailedOptions.columnDefs = [{ 
   		name: "year", 
@@ -87,25 +85,27 @@ angular.module('angularImperativeCodebaseApp')
       	});
     };
 
-  	var parser = { 
-  		changemodelNames: function(modelNames) {
-  			debugger;
-  			for (var i = 0; i < modelNames.length; i++) {
-  				vm.modelNames[i].model_name = "The Original " + vm.modelNames[i].model_name;
-  			}
-  			vm.gridOptions.data = vm.modelNames;
-  		}
-  	}; 
+    // 
 
-
-
-
+  	// HTTP Calls 
   	var editCall = function (data) {
   		$http.post('http://localhost:3000/drones/' + data.modelNumber, data)
   			.success( function (data){
   				return data;
   			});
   	};
+
+  	vm.createCall = function(modelName, modelNumber) {
+  		var postUrl = 'http://localhost:3000/drones'
+  		var data = { 
+  			model_number: modelNumber, 
+  			model_name: modelName
+  		};
+  		return $http.post(postUrl, JSON.stringify(data))
+  			.success(function(data) { 
+ 				vm.gridOptions.data.push(data);
+  			});
+  	}; 
 
   	var detailsCall = function (id) {
   		$http.get(rootUrl + '/' + id)
@@ -117,20 +117,18 @@ angular.module('angularImperativeCodebaseApp')
 			});
   	};
 
+  	var parseObj = function (obj) { 
+  		for (var i = 0; i < obj.length; i++) { 
+  			obj[i].model_name = "The Original " + obj[i].model_name;
+  		};
+  		return obj;
+  	}
+
   	$http.get(rootUrl)
   		.success(function(data){
-  			debugger;
-  			vm.gridOptions.data = data;
-  			$http.get(firstDetailedItem).success(function(data){ 
-
+  			vm.gridOptions.data = parseObj(data);
+  			$http.get(firstDetailedItem).success(function(data){
   				vm.detailedOptions.data = data;
   			});
   		});
-// Partial Application 
-// Use Promises 
-// Immutable Data Stuctures 
-// Composition 
-
-
-
-  });
+});

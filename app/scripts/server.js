@@ -42,10 +42,13 @@ app.post('/drones/:id', function(req, res){
     res.header("Access-Control-Allow-Headers", "Cache-Control, Pragma, Origin, Authorization, Content-Type, X-Requested-With, Accept,X-Custom-Header");
     res.header("Access-Control-Allow-Methods", "GET, PUT, POST");
     res.setHeader('Access-Control-Allow-Credentials', true);
-
 	res.json(require('./drone_data.json'));
+	res.json(200);
+});
 
-
+app.post('/drones', function(req, res){ 
+	console.log(req.body);
+	res.json(req.body);
 });
 var server = app.listen(process.env.PORT || 3000, function () {
   var host = server.address().address;
