@@ -51,24 +51,27 @@ angular.module('angularImperativeCodebaseApp')
   			model_name: modelName
   		};
   		return $http.post(postUrl, JSON.stringify(data))
-  			.success(function(data) { 
-  				vm.rowCollection.push(data);
+  			.success(function(data) {
+  				var modifiedData = Immutable.fromJS(data);
+  				vm.rowCollection = vm.rowCollection.push(modifiedData);
   			});
   	}; 
 
 
-	var anonymous  = function (input) { return input };
-	var modifyData1 = function(input, drone) { 
-		return {model_name: input + drone.get('model_name'), model_number: drone.get('model_number')}
+	var anonymous = function (input) { return input };
+	var formatObj = function(input, drone) { 
+		var immutableObj = {model_name: input + drone.get('model_name'), model_number: drone.get('model_number')};
+		return Immutable.fromJS(immutableObj);
 	};
-	var modifyData2 = R.partial(modifyData1, ["The Original"]);
+	var modifyName = R.partial(formatObj, ["The Original "]);
 
 
-	vm.parsedData = R.compose(anonymous, modifyData2);
+	vm.parsedData = R.compose(anonymous, modifyName);
 
   	$http.get(rootUrl)
   		.success(function(data){ 
-  			vm.rowCollection = Immutable.fromJS(data);
+  			var immutableData = Immutable.fromJS(data);
+  			vm.rowCollection = immutableData.map(vm.parsedData)
   			$http.get(firstDetailedItem).success(function(data){ 
   				vm.detailCollection = Immutable.fromJS(data);
   			});

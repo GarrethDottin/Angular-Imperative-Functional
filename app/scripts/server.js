@@ -45,6 +45,12 @@ app.post('/drones/:id', function(req, res){
 	res.json(require('./drone_data.json'));
 	// Send back JSON file of single user
 }); 
+
+app.post('/drones', function(req, res){ 
+	console.log('this post was hit')
+	res.json(req.body);
+});
+
 var server = app.listen(process.env.PORT || 3000, function () {
   var host = server.address().address;
   var port = server.address().port;
