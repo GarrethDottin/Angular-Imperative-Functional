@@ -126,10 +126,4 @@ angular.module('angularImperativeCodebaseApp')
   			vm.detailedOptions.data = data;
   		});
   	})
-  		// .success(function(data){
-  		// 	vm.gridOptions.data = parseObj(data);
-  		// 	$http.get(firstDetailedItem).then(function(data){
-  		// 		vm.detailedOptions.data = data;
-  		// 	});
-  		// });
 });
