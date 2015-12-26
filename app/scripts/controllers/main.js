@@ -44,6 +44,17 @@ angular.module('angularImperativeCodebaseApp')
   			});
   	};
 
+  	vm.createCall = function(modelName, modelNumber) {
+  		var postUrl = 'http://localhost:3000/drones'
+  		var data = { 
+  			model_number: modelNumber, 
+  			model_name: modelName
+  		};
+  		return $http.post(postUrl, JSON.stringify(data))
+  			.success(function(data) { 
+ 				vm.gridOptions.data.push(data);
+  			});
+  	}; 
 
 
 	var anonymous  = function (input) { return input };
