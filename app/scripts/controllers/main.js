@@ -89,10 +89,9 @@ angular.module('angularImperativeCodebaseApp')
 
   	// HTTP Calls 
   	var editCall = function (data) {
-  		$http.post('http://localhost:3000/drones/' + data.modelNumber, data)
-  			.success( function (data){
-  				return data;
-  			});
+  		$.post('http://localhost:3000/drones/' + data.modelNumber, data, function(data) { 
+  			return data; 
+  		});
   	};
 
   	vm.createCall = function(modelName, modelNumber) {
@@ -101,34 +100,36 @@ angular.module('angularImperativeCodebaseApp')
   			model_number: modelNumber, 
   			model_name: modelName
   		};
-  		return $http.post(postUrl, JSON.stringify(data))
-  			.success(function(data) { 
- 				vm.gridOptions.data.push(data);
-  			});
+  		$.post(postUrl, JSON.stringify(data), function(data) { 
+  			vm.gridOptions.data.push(data);
+  		});
   	}; 
 
   	var detailsCall = function (id) {
-  		$http.get(rootUrl + '/' + id)
-  			.success(function(data) {
-  				vm.detailedOptions.data = data;
-  			})
-  			.error(function(data) { 
-  				console.log(data);
-			});
+  		$.get(rootUrl + '/' + id, function() { 
+  			vm.detailedOptions.data = data;
+  		})
   	};
 
+
+  	var type = "The Original ";
   	var parseObj = function (obj) { 
   		for (var i = 0; i < obj.length; i++) { 
-  			obj[i].model_name = "The Original " + obj[i].model_name;
+  			obj[i].model_name = type + obj[i].model_name;
   		};
   		return obj;
   	};
 
-  	$http.get(rootUrl)
-  		.success(function(data){
-  			vm.gridOptions.data = parseObj(data);
-  			$http.get(firstDetailedItem).success(function(data){
-  				vm.detailedOptions.data = data;
-  			});
+  	$.get(rootUrl, function(data) { 
+  		vm.gridOptions.data = parseObj(data);
+  		$.get(firstDetailedItem).then(function(data){
+  			vm.detailedOptions.data = data;
   		});
+  	})
+  		// .success(function(data){
+  		// 	vm.gridOptions.data = parseObj(data);
+  		// 	$http.get(firstDetailedItem).then(function(data){
+  		// 		vm.detailedOptions.data = data;
+  		// 	});
+  		// });
 });
