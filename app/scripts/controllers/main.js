@@ -122,7 +122,7 @@ angular.module('angularImperativeCodebaseApp')
   			obj[i].model_name = "The Original " + obj[i].model_name;
   		};
   		return obj;
-  	}
+  	};
 
   	$http.get(rootUrl)
   		.success(function(data){
