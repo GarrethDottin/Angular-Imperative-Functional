@@ -21,7 +21,7 @@ angular.module('angularImperativeCodebaseApp')
             	'<input type="text" ng-model="currentModelNumber"/>' + 
             	'<br> <h4> Model Name</h4>' + 
             	'<input type="text" ng-model="currentModelName"/>' + 
-            	'<br> <button ng-click="saveDetails(currentModelNumber, currentModelName)"> Save</button>' + 
+            	'<br> <button ng-click="updateDetails(currentModelNumber, currentModelName)"> Save</button>' + 
             	'</div>' + 
             '</div>' + 
           '</div>' + 

@@ -10,38 +10,43 @@
 angular.module('angularImperativeCodebaseApp')
   .controller('MainCtrl', function ($http, $scope, $location) {
   	var vm = $scope,
-  		rootUrl =  "http://localhost:3000/drones",
-  		firstDetailedItem = "http://localhost:3000/drones/1";
+  		rootUrl =  "http://localhost:3000/drones";
 
   	vm.modelNames = [];
   	vm.rowCollection = [];
   	vm.displayCollection = [];
   	vm.showModal = false;
+	allItems();
+
     vm.toggleModal = function(row){
         vm.showModal = !vm.showModal;
         vm.currentModelNumber = row.get('model_number');
         vm.currentModelName = row.get('model_name');
     };
 
+	var anonymous = function (input) { return input };
+	var formatObj = function(input, drone) { 
+		var immutableObj = {model_name: input + drone.get('model_name'), model_number: drone.get('model_number')};
+		return Immutable.fromJS(immutableObj);
+	};
+	var modifyName = R.partial(formatObj, ["The Original "]);
 
-  	var detailsCall = function (id) { 
-  		$http.get(rootUrl + '/' + id)
-  			.success(function(data) { 
-  				vm.rowCollection = Immutable.fromJS(data); 
-  				vm.detailedOptions.data = Immutable.fromJS(data);
-  			})
-  			.error(function(data) { 
-  				console.log(data);
-			});
-  	};
 
-  	vm.saveDetails = function (currentModelNumber, currentModelName) { 
+	vm.parsedData = R.compose(anonymous, modifyName);
+
+	function setTable (obj) {
+		var immutableData = Immutable.fromJS(obj.data); 
+		vm.rowCollection = immutableData.map(vm.parsedData);
+	}; 
+
+	//http calls 
+
+
+	vm.updateDetails = function (currentModelNumber, currentModelName) {
   		var url = 'http://localhost:3000/drones/' + currentModelNumber;
   		var data = {model_number: currentModelNumber, model_name: currentModelName};
   		$http.post(url, data)
-  			.success(function() { 
-  				vm.showModal = false;
-  			});
+  			.then(vm.toggleModal);
   	};
 
   	vm.createCall = function(modelName, modelNumber) {
@@ -57,25 +62,19 @@ angular.module('angularImperativeCodebaseApp')
   			});
   	}; 
 
+	function firstDetailCall() {
+		var firstDetailedItem = "http://localhost:3000/drones/1";
+		return $http.get(firstDetailedItem).then(function(obj) { 
+			vm.detailCollection = Immutable.fromJS(obj.data);
+		});
+	}; 
 
-	var anonymous = function (input) { return input };
-	var formatObj = function(input, drone) { 
-		var immutableObj = {model_name: input + drone.get('model_name'), model_number: drone.get('model_number')};
-		return Immutable.fromJS(immutableObj);
-	};
-	var modifyName = R.partial(formatObj, ["The Original "]);
-
-
-	vm.parsedData = R.compose(anonymous, modifyName);
-
-  	$http.get(rootUrl)
-  		.success(function(data){ 
-  			var immutableData = Immutable.fromJS(data);
-  			vm.rowCollection = immutableData.map(vm.parsedData)
-  			$http.get(firstDetailedItem).success(function(data){ 
-  				vm.detailCollection = Immutable.fromJS(data);
-  			});
-  		});
+	// All Items
+	function allItems () { 
+		return $http.get(rootUrl)
+  			.then(setTable)
+  			.then(firstDetailCall);
+	}; 
 
 
   });
