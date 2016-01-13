@@ -39,9 +39,8 @@ angular.module('angularImperativeCodebaseApp')
 		vm.rowCollection = immutableData.map(vm.parsedData);
 	}; 
 
+
 	//http calls 
-
-
 	vm.updateDetails = function (currentModelNumber, currentModelName) {
   		var url = 'http://localhost:3000/drones/' + currentModelNumber;
   		var data = {model_number: currentModelNumber, model_name: currentModelName};
