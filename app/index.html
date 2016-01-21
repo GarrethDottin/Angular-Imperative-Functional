@@ -35,15 +35,24 @@
               <span class="icon-bar"></span>
             </button>
 
-            <a class="navbar-brand" href="#/">angularImperativeCodebase</a>
+            <a class="navbar-brand" href="#/">Laar's Drones</a>
           </div>
 
           
         </div>
       </div>
     </div>
+    <div class="container">
+      <div> {{userName}}</div>
+      <div><img class="profile-pic" ng-src="{{details.url}}"/> </br> 
+        <div> Role: {{details.roleType}}</div> 
+        <div> Bio: {{details.bio}} </div>
+        <div> Role: {{details.role}} </div>
+      </div> 
+    </div> 
 
     <div class="container">
+
       <div id="grid1" ui-grid="gridOptions" ui-grid-selection class="grid">
       <div id="grid2" ui-grid="detailedOptions" class="grid"></div>
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse"></button>
