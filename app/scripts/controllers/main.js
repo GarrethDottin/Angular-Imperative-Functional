@@ -81,37 +81,46 @@ angular.module('angularImperativeCodebaseApp')
     function showUserProfile() { 
       var userProfile = 'http://localhost:3000/user/laars'
       return $http.get(userProfile)
-        .then(populateUser)
+        .then(generalUser)
+        .then(detailUser)
     };
-    function populateUser (response) { 
-      var id = response.id;
-      // var userDetails = 'http://localhost:3000/user/details/'+ id;
+    function generalUser (response) { 
+      var id = response.data.id;
+      var userDetails = 'http://localhost:3000/user/details/'+ id;
       // vm.userName = response.name;
       // vm.details.url = response.url;
-    }
+      return $http.get(userDetails)
+    }; 
 
-    var userProfile = 'http://localhost:3000/user/laars'
-      return $http.get(userProfile).then(function (response, err) { 
-          var id = response.id;
-          var userDetails = 'http://localhost:3000/user/details/'+ id;
-          vm.userName = response.name;
-          vm.details.url = response.url;
-      });
-        $.get(userDetails, function (response, err) {
-          vm.details.bio = response.bio; 
-          vm.details.roleType = response.role;
-          var profileDetails = 'http://localhost:3000/role/' + response.role;
-          // Display userProfile info 
-          
-          $.get(profileDetails, function (response, err) {
-            vm.details.role = response.admin;
-          });
-        }); 
-
-      });
+    function detailUser (response) {
+    // vm.details.bio = response.bio; 
+    // vm.details.roleType = response.role;
+    // var profileDetails = 'http://localhost:3000/role/' + response.role; 
+      console.log(response)
     };
 
-    function userDetails (response, err) { 
+    function roleInformation (response) { 
+
+
+    };
+
+    // var userProfile = 'http://localhost:3000/user/laars'
+    //     $.get(userDetails, function (response, err) {
+    //       vm.details.bio = response.bio; 
+    //       vm.details.roleType = response.role;
+    //       var profileDetails = 'http://localhost:3000/role/' + response.role;
+    //       // Display userProfile info 
+          
+    //       $.get(profileDetails, function (response, err) {
+    //         vm.details.role = response.admin;
+    //       });
+    //     }); 
+
+    //   });
+    // };
+
+    showUserProfile();
+    function userDetails (response, err) {
       var userDetails = 'http://localhost:3000/user/details/'+ id;
       return $http.get(userDetails)
       var userDetails = 'http://localhost:3000/user/details/'+ id;
