@@ -47,9 +47,21 @@ app.post('/drones/:id', function(req, res){
 });
 
 app.post('/drones', function(req, res){ 
-	console.log(req.body);
 	res.json(req.body);
 });
+
+app.get('/user/details/:id', function (req, res) { 
+	res.json(require('./user_details.json'));
+});
+
+app.get('/user/:id', function (req, res) { 
+	res.json(require('./user_general.json'));
+});
+
+app.get('/role/:type', function(req, res){ 
+	res.json(require('./role_data.json'));
+});
+
 var server = app.listen(process.env.PORT || 3000, function () {
   var host = server.address().address;
   var port = server.address().port;

@@ -9,14 +9,15 @@
  */
 angular.module('angularImperativeCodebaseApp')
   .controller('MainCtrl', function ($http, $scope, $location) {
-  	var vm = $scope,
-  		rootUrl =  "http://localhost:3000/drones",
-  		firstDetailedItem = "http://localhost:3000/drones/1";
+  	var vm = $scope;
+  	var rootUrl =  "http://localhost:3000/drones";
+  	var firstDetailedItem = "http://localhost:3000/drones/1";
   	vm.modelNames = [];
+    vm.details = {};
 
 
   	// Edit Modal 
-  	$scope.showModal = true;
+  	$scope.showModal = false;
     vm.toggleModal = function(row){
     	$scope.showModal = !$scope.showModal;
     	return editFunction(row);
@@ -75,13 +76,11 @@ angular.module('angularImperativeCodebaseApp')
     }];
 
     vm.gridOptions.onRegisterApi = function (data) {
-		data.selection.on.rowSelectionChanged(vm,function(row){
-			var currentRow = this.grid.selection.lastSelectedRow;
-			this.selection.clearSelectedRows(); 
-			currentRow.isSelected = true; 
-			detailsCall(currentRow.entity.model_number);
-			// Call the current row with a http call 
-			// 
+		  data.selection.on.rowSelectionChanged(vm,function(row){
+			  var currentRow = this.grid.selection.lastSelectedRow;
+			  this.selection.clearSelectedRows(); 
+			  currentRow.isSelected = true; 
+			  detailsCall(currentRow.entity.model_number);
       	});
     };
 
@@ -111,8 +110,32 @@ angular.module('angularImperativeCodebaseApp')
   		})
   	};
 
+    function showUserProfile() { 
+      var userProfile = 'http://localhost:3000/user/laars'
+      $.get(userProfile, function (response, err) { 
+          var id = response.id;
+          var userDetails = 'http://localhost:3000/user/details/'+ id;
+          vm.userName = response.name;
+          vm.details.url = response.url;
+
+        $.get(userDetails, function (response, err) {
+          vm.details.bio = response.bio; 
+          vm.details.roleType = response.role;
+          var profileDetails = 'http://localhost:3000/role/' + response.role;
+          // Display userProfile info 
+          
+          $.get(profileDetails, function (response, err) {
+            vm.details.role = response.admin;
+          });
+        }); 
+
+      });
+    };
+
+    showUserProfile();
 
   	var type = "The Original ";
+
   	var parseObj = function (obj) { 
   		for (var i = 0; i < obj.length; i++) { 
   			obj[i].model_name = type + obj[i].model_name;
@@ -125,5 +148,5 @@ angular.module('angularImperativeCodebaseApp')
   		$.get(firstDetailedItem).then(function(data){
   			vm.detailedOptions.data = data;
   		});
-  	})
+  	});
 });
