@@ -79,7 +79,7 @@ angular.module('angularImperativeCodebaseApp')
   	}; 
 
     function showUserProfile() { 
-      var userProfile = 'http://localhost:3000/user/laars'
+      var userProfile = 'http://localhost:3000/user/laars'; 
       return $http.get(userProfile)
         .then(generalUser)
         .then(detailUser)
@@ -93,10 +93,9 @@ angular.module('angularImperativeCodebaseApp')
     }; 
 
     function detailUser (response) {
-    // vm.details.bio = response.bio; 
-    // vm.details.roleType = response.role;
-    // var profileDetails = 'http://localhost:3000/role/' + response.role; 
-      console.log(response)
+    vm.details.bio = response.bio; 
+    vm.details.roleType = response.role;
+    var profileDetails = 'http://localhost:3000/role/' + response.role; 
     };
 
     function roleInformation (response) { 
