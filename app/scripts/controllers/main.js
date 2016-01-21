@@ -77,4 +77,50 @@ angular.module('angularImperativeCodebaseApp')
   			.then(setTable)
   			.then(firstDetailCall);
   	}; 
+
+    function showUserProfile() { 
+      var userProfile = 'http://localhost:3000/user/laars'
+      return $http.get(userProfile)
+        .then(populateUser)
+    };
+    function populateUser (response) { 
+      var id = response.id;
+      // var userDetails = 'http://localhost:3000/user/details/'+ id;
+      // vm.userName = response.name;
+      // vm.details.url = response.url;
+    }
+
+    var userProfile = 'http://localhost:3000/user/laars'
+      return $http.get(userProfile).then(function (response, err) { 
+          var id = response.id;
+          var userDetails = 'http://localhost:3000/user/details/'+ id;
+          vm.userName = response.name;
+          vm.details.url = response.url;
+      });
+        $.get(userDetails, function (response, err) {
+          vm.details.bio = response.bio; 
+          vm.details.roleType = response.role;
+          var profileDetails = 'http://localhost:3000/role/' + response.role;
+          // Display userProfile info 
+          
+          $.get(profileDetails, function (response, err) {
+            vm.details.role = response.admin;
+          });
+        }); 
+
+      });
+    };
+
+    function userDetails (response, err) { 
+      var userDetails = 'http://localhost:3000/user/details/'+ id;
+      return $http.get(userDetails)
+      var userDetails = 'http://localhost:3000/user/details/'+ id;
+      vm.details.bio = response.bio; 
+      vm.details.roleType = response.role;
+      var profileDetails = 'http://localhost:3000/role/' + response.role;
+
+          // Display userProfile info 
+
+    };
+
   });
