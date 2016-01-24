@@ -59,7 +59,7 @@ app.get('/user/details/:id', function (req, res) {
   res.json(require('./user_details.json'));
 });
 
-app.get('/role/:id, function (req, res) { 
+app.get('/role/:id', function (req, res) { 
   res.json(require('./role_data.json'));
 });
 

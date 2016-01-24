@@ -16,6 +16,7 @@ angular.module('angularImperativeCodebaseApp')
     vm.rowCollection = [];
     vm.displayCollection = [];
     vm.showModal = false;
+    vm.details = {};
     allItems();
 
     vm.toggleModal = function(row){
@@ -83,26 +84,28 @@ angular.module('angularImperativeCodebaseApp')
       return $http.get(userProfile)
         .then(generalUser)
         .then(detailUser)
+        .then(roleInformation)
     };
     function generalUser (response) { 
       var id = response.data.id;
-      var userDetails = 'http://localhost:3000/user/details/'+ id;
+      var userDetails = 'http://localhost:3000/user/details/' + id;
       // vm.userName = response.name;
       // vm.details.url = response.url;
       return $http.get(userDetails)
     }; 
 
     function detailUser (response) {
-      vm.details.bio = response.bio; 
-      vm.details.roleType = response.role;
-      var profileDetails = 'http://localhost:3000/role/' + response.role; 
+      vm.details.bio = response.data.bio; 
+      vm.details.roleType = response.data.role;
+      var profileDetails = 'http://localhost:3000/role/' + response.data.role; 
       return $http.get(profileDetails)
     };
 
     function roleInformation (response) { 
-      vm.details.roleDetails = response.role;
+      vm.details.roleDetails = response.data.role;
 
     };
+
 
     // var userProfile = 'http://localhost:3000/user/laars'
     //     $.get(userDetails, function (response, err) {
