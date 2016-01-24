@@ -93,13 +93,14 @@ angular.module('angularImperativeCodebaseApp')
     }; 
 
     function detailUser (response) {
-    vm.details.bio = response.bio; 
-    vm.details.roleType = response.role;
-    var profileDetails = 'http://localhost:3000/role/' + response.role; 
+      vm.details.bio = response.bio; 
+      vm.details.roleType = response.role;
+      var profileDetails = 'http://localhost:3000/role/' + response.role; 
+      return $http.get(profileDetails)
     };
 
     function roleInformation (response) { 
-
+      vm.details.roleDetails = response.role;
 
     };
 
