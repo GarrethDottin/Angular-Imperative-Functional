@@ -89,50 +89,22 @@ angular.module('angularImperativeCodebaseApp')
     function generalUser (response) { 
       var id = response.data.id;
       var userDetails = 'http://localhost:3000/user/details/' + id;
-      // vm.userName = response.name;
-      // vm.details.url = response.url;
-      return $http.get(userDetails)
+      vm.userName = response.data.name;
+      vm.details.url = response.data.url;
+      return $http.get(userDetails);
     }; 
 
     function detailUser (response) {
       vm.details.bio = response.data.bio; 
       vm.details.roleType = response.data.role;
       var profileDetails = 'http://localhost:3000/role/' + response.data.role; 
-      return $http.get(profileDetails)
+      return $http.get(profileDetails);
     };
 
     function roleInformation (response) { 
       vm.details.roleDetails = response.data.role;
-
     };
-
-
-    // var userProfile = 'http://localhost:3000/user/laars'
-    //     $.get(userDetails, function (response, err) {
-    //       vm.details.bio = response.bio; 
-    //       vm.details.roleType = response.role;
-    //       var profileDetails = 'http://localhost:3000/role/' + response.role;
-    //       // Display userProfile info 
-          
-    //       $.get(profileDetails, function (response, err) {
-    //         vm.details.role = response.admin;
-    //       });
-    //     }); 
-
-    //   });
-    // };
 
     showUserProfile();
-    function userDetails (response, err) {
-      var userDetails = 'http://localhost:3000/user/details/'+ id;
-      return $http.get(userDetails)
-      var userDetails = 'http://localhost:3000/user/details/'+ id;
-      vm.details.bio = response.bio; 
-      vm.details.roleType = response.role;
-      var profileDetails = 'http://localhost:3000/role/' + response.role;
-
-          // Display userProfile info 
-
-    };
 
   });
