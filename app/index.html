@@ -19,15 +19,18 @@
     <!-- endbuild -->
   </head>
   <body ng-app="angularImperativeCodebaseApp">
-    <!--[if lte IE 8]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
-
-    <!-- Add your site or application content here -->
     <div ng-controller="MainCtrl as main" class="header">
       <div class="navbar navbar-default" role="navigation">
+        <h3 id="title"> Drone Store</h3>
+      </div>
         <div class="container">
-          <div class="navbar-header">
+          <div>
+            <div> User: {{userName}}</div>
+            <div><img class="profile-pic inline" ng-src="{{details.url}}"/>  
+            <div class="inline"> <strong>Role:</strong> {{details.roleType}}</div> <br>
+            <div class="inline"> <strong>Bio:</strong> {{details.bio}} </div> </br>
+            <div class="inline"> <strong>Details:</strong> {{details.role}} </div></br>
+            </div> 
             <table st-table="rowCollection"  st-table="displayedCollection" class="table table-striped">
               <thead>
               <tr>
@@ -72,7 +75,6 @@
               <span class="icon-bar"></span>
             </button>
 
-            <a class="navbar-brand" href="#/">angularImperativeCodebase</a>
           </div>
           <modal visible="showModal">
           <form role="form"  ng-submit="submitRequest()">
@@ -94,7 +96,7 @@
           <input type="text" ng-model="main.newModelNumber"> </br>
           <h4> Model Number </h4> </br>
           <input type="text" ng-model="main.newModelName"> </br> 
-          <button class="button" ng-click="createCall(main.newModelName, main.newModelNumber)">Create</button>  
+          <button class="btn" ng-click="createCall(main.newModelName, main.newModelNumber)">Create</button>  
         </form>
       </div>
     </div>
@@ -103,27 +105,6 @@
       </div>
     </div>
 
-    <div class="container">
-    <div ng-view=""></div>
-    </div>
-
-    <div class="footer">
-      <div class="container">
-        <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
-      </div>
-    </div>
-
-
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
-     <script>
-       !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
-       (A[l].q=A[l].q||[]).push(arguments)},A[l].l=+new Date,a=n.createElement(g),
-       r=n.getElementsByTagName(g)[0],a.src=u,r.parentNode.insertBefore(a,r)
-       }(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-       ga('create', 'UA-XXXXX-X');
-       ga('send', 'pageview');
-    </script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/ramda/0.18.0/ramda.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/immutable/3.7.6/immutable.js"></script>
 
@@ -144,11 +125,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/immutable/3.7.6/immutable.js"></script>
     <script src="bower_components/angular-ui-grid/ui-grid.min.js"></script>
     <script src="bower_components/immutable-angular/immutable.js"></script>
-        <!-- build:js({.tmp,app}) scripts/scripts.js -->
-        <script src="scripts/app.js"></script>
-        <script src="scripts/controllers/main.js"></script>
-        <script src="scripts/controllers/about.js"></script>
-        <script src="scripts/directives/modal.js"></script>
-        <!-- endbuild -->
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/controllers/main.js"></script>
+    <script src="scripts/controllers/about.js"></script>
+    <script src="scripts/directives/modal.js"></script>
+    <!-- endbuild -->
 </body>
 </html>
