@@ -47,7 +47,6 @@ app.post('/drones/:id', function(req, res){
 }); 
 
 app.post('/drones', function(req, res){ 
-	console.log('this post was hit')
 	res.json(req.body);
 });
 

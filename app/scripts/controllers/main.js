@@ -86,6 +86,7 @@ angular.module('angularImperativeCodebaseApp')
         .then(detailUser)
         .then(roleInformation)
     };
+    
     function generalUser (response) { 
       var id = response.data.id;
       var userDetails = 'http://localhost:3000/user/details/' + id;
