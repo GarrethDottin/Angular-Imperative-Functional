@@ -1,0 +1,19 @@
+var express = require('express'), 
+	app = express(), 
+	http = require('request'), 
+	Promise = require('promise'), 
+	bodyParser = require('body-parser'), 
+	moment = require('moment');
+	cors = require('cors'), 
+	baseUrl = "https://api.twitter.com/1.1/search/tweets.json?q=";
+app.use(bodyParser.json({
+  extended: true
+}));
+app.use(cors());
+
+var server = app.listen(process.env.PORT || 3000, function () {
+  var host = server.address().address;
+  var port = server.address().port;
+
+  console.log('Example app listening at http://' + port);
+});

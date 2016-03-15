@@ -104,29 +104,34 @@ angular.module('angularImperativeCodebaseApp')
   		});
   	}; 
 
+
   	var detailsCall = function (id) {
   		$.get(rootUrl + '/' + id, function() { 
   			vm.detailedOptions.data = data;
   		})
   	};
 
-    function showUserProfile() { 
+    function showUserProfile() {
       var userProfile = 'http://localhost:3000/user/laars'
+     
       $.get(userProfile, function (response, err) { 
           var id = response.id;
           var userDetails = 'http://localhost:3000/user/details/'+ id;
+         
           vm.userName = response.name;
           vm.details.url = response.url;
 
         $.get(userDetails, function (response, err) {
-          vm.details.bio = response.bio; 
-          vm.details.roleType = response.role;
-          var profileDetails = 'http://localhost:3000/role/' + response.role;
-          // Display userProfile info 
-          
-          $.get(profileDetails, function (response, err) {
-            vm.details.role = response.admin;
-          });
+            var profileDetails = 'http://localhost:3000/role/' + 
+            response.role;          
+
+            vm.details.bio = response.bio; 
+            vm.details.roleType = response.role;
+         
+            $.get(profileDetails, function (response, err) {
+                vm.details.role = response.admin;          
+            });
+
         }); 
 
       });
