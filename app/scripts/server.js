@@ -17,7 +17,7 @@ app.get('/drones', function (req, res){
 	res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Cache-Control, Pragma, Origin, Authorization, Content-Type, X-Requested-With");
     res.header("Access-Control-Allow-Methods", "GET, PUT, POST");
-	res.json(require('./Mock_Data.json'));
+	res.json(require('./mock_Data.json'));
 });
 
 app.get('/drones/1', function(req, res) { 

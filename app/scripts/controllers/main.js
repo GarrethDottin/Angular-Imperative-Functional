@@ -84,7 +84,6 @@ angular.module('angularImperativeCodebaseApp')
       	});
     };
 
-    // 
 
   	// HTTP Calls 
   	var editCall = function (data) {
@@ -136,6 +135,8 @@ angular.module('angularImperativeCodebaseApp')
 
       });
     };
+
+    //Data Parser
 
     showUserProfile();
 
