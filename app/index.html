@@ -21,17 +21,33 @@
   <body ng-app="angularImperativeCodebaseApp">
     <div ng-controller="MainCtrl as main" class="header">
       <div class="navbar navbar-default" role="navigation">
-        <h3 id="title"> Drone Store</h3>
+        <a class="navbar-brand title" href="#/">The Drone Shop</a>
+        <i class="glyphicon glyphicon-home"></i>
       </div>
-        <div class="container">
-          <div>
-            <div> User: {{userName}}</div>
-            <div><img class="profile-pic inline" ng-src="{{details.url}}"/>  
-            <div class="inline"> <strong>Role:</strong> {{details.roleType}}</div> <br>
-            <div class="inline"> <strong>Bio:</strong> {{details.bio}} </div> </br>
-            <div class="inline"> <strong>Details:</strong> {{details.role}} </div></br>
-            </div> 
-            <table st-table="rowCollection"  st-table="displayedCollection" class="table table-striped">
+      <div class="container white-box">
+        <div class="float-left">
+          <div><img class="profile-pic" ng-src="{{details.url}}"/></div>
+          <div> {{userName}}</div>
+        </div>
+        <div class="float-right"> 
+          <div> Role: {{details.roleType}}</div> 
+          <div> Bio: {{details.bio}} </div>
+          <div> Role: {{details.role}} </div>
+        </div> 
+      </div>
+      <div class="create-form"> 
+        <h2> Create Form</h2> 
+        <form> 
+          <h4> Model Name</h4>
+          <input type="text" ng-model="main.newModelNumber"> </br>
+          <h4> Model Number </h4>
+          <input type="text" ng-model="main.newModelName"> </br> 
+          <button class="button" ng-click="createCall(main.newModelName, main.newModelNumber)">Create</button>  
+        </form>
+      </div>
+      <div class="container">
+        <div class="main-table">
+          <table id="grid1" st-table="rowCollection"  st-table="displayedCollection" class="table table-striped">
               <thead>
               <tr>
                 <th>Model Number</th>
@@ -39,34 +55,37 @@
               </tr>
               </thead>
               <tbody>
-              <tr ng-repeat="row in rowCollection | mutable">
-                <td>{{row.get('model_number')}}</td>
-                <td>{{row.get('model_name')}}</td>
-                <td> <a href='' ng-click="toggleModal(row)"> Edit</a>
-              </tr>
+                <tr ng-repeat="row in rowCollection | mutable">
+                  <td>{{row.get('model_number')}}</td>
+                  <td>{{row.get('model_name')}}</td>
+                  <td> <a href='' ng-click="toggleModal(row)"> Edit</a>
+                </tr>
               </tbody>
-            </table>
-            <table st-table="detailCollection" class="table table-striped">
-              <thead>
-              <tr>
-                <th>Model Name</th>
-                <th>Model Description </th>
-                <th>Model Price </th>
-                <th>Model Range </th>
-                <th>Model Year </th>
+          </table>
+        </div>
+        <div class="details-table">
+          <table id="grid2" st-table="detailCollection" class="table table-striped">
+            <thead>
+            <tr>
+              <th>Model Name</th>
+              <th>Model Description </th>
+              <th>Model Price </th>
+              <th>Model Range </th>
+              <th>Model Year </th>
 
-              </tr>
-              </thead>
-              <tbody >
-              <tr ng-repeat="row in detailCollection | mutable">
-                <td>{{row.get('description')}}</td>
-                <td>{{row.get('name')}}</td>
-                <td>{{row.get('price')}}</td>
-                <td>{{row.get('range')}}</td>
-                <td>{{row.get('year')}}</td>
-              </tr>
-              </tbody>
-            </table>
+            </tr>
+            </thead>
+            <tbody >
+            <tr ng-repeat="row in detailCollection | mutable">
+              <td>{{row.get('description')}}</td>
+              <td>{{row.get('name')}}</td>
+              <td>{{row.get('price')}}</td>
+              <td>{{row.get('range')}}</td>
+              <td>{{row.get('year')}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div> 
 
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
               <span class="sr-only">Toggle navigation</span>
@@ -90,14 +109,6 @@
           </form>  
           </modal>
           <div> 
-        <h2> Create Form</h2> 
-        <form> 
-          <h4> Model Name</h4>
-          <input type="text" ng-model="main.newModelNumber"> </br>
-          <h4> Model Number </h4> </br>
-          <input type="text" ng-model="main.newModelName"> </br> 
-          <button class="btn" ng-click="createCall(main.newModelName, main.newModelNumber)">Create</button>  
-        </form>
       </div>
     </div>
           
@@ -133,3 +144,6 @@
     <!-- endbuild -->
 </body>
 </html>
+
+
+
